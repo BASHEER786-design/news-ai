@@ -55,7 +55,7 @@ app.post('/login', (req, res) => {
 });
 
 // NewsAPI endpoint
-const NEWS_API_KEY = ""; // <-- put your key here
+const NEWS_API_KEY = "a300f7d6094646569fa40a3c999f0131"; // <-- put your key here
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 app.get('/news', async (req, res) => {
@@ -81,3 +81,4 @@ app.get('/article.html', (req, res) => res.sendFile(path.join(__dirname, 'articl
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
+
