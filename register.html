@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - AI Daily News</title>
+<style>
+body { font-family:'Georgia', serif; background:#f8f8f8; color:#333; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
+.container { background:white; padding:40px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); width:100%; max-width:400px; }
+h1 { text-align:center; margin-bottom:30px; color:#2c3e50; }
+input { width:100%; padding:12px; margin:10px 0; border-radius:5px; border:1px solid #ccc; font-size:1em; }
+button { width:100%; padding:12px; border:none; border-radius:5px; background:#1e3c72; color:white; font-size:1em; cursor:pointer; margin-top:10px; transition:0.3s; }
+button:hover { background:#2a5298; }
+p { text-align:center; margin-top:15px; }
+p a { color:#e74c3c; text-decoration:none; }
+p a:hover { text-decoration:underline; }
+.error { color:#e74c3c; font-size:0.9em; }
+.success { color:#27ae60; font-size:0.9em; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Register</h1>
+    <div id="message"></div>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="registerUser()">Register</button>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+</div>
+
+<script>
+async function registerUser() {
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const messageDiv = document.getElementById('message');
+
+    if(!username || !email || !password) {
+        messageDiv.innerHTML = '<div class="error">All fields are required.</div>';
+        return;
+    }
+
+    // Send registration data to server
+    try {
+        const res = await fetch('/register', {
+            method:'POST',
+            headers:{ 'Content-Type':'application/json' },
+            body: JSON.stringify({ username, email, password })
+        });
+        const data = await res.json();
+
+        if(data.success){
+            messageDiv.innerHTML = '<div class="success">Registration successful! Redirecting to login...</div>';
+            setTimeout(()=>{ window.location.href = 'login.html'; },2000);
+        } else {
+            messageDiv.innerHTML = `<div class="error">${data.message}</div>`;
+        }
+    } catch(err){
+        messageDiv.innerHTML = '<div class="error">Server error. Try again later.</div>';
+        console.error(err);
+    }
+}
+</script>
+</body>
+</html>

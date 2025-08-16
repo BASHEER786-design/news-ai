@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Article</title>
+<style>
+body { font-family:'Georgia', serif; background:#f8f8f8; color:#333; padding:20px; }
+.container { max-width:800px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 10px 20px rgba(0,0,0,0.1);}
+img { max-width:100%; border-radius:10px; margin-bottom:15px;}
+h1 { margin-bottom:20px; color:#2c3e50;}
+p { text-align:justify; line-height:1.6; margin-bottom:15px;}
+.footer { text-align:center; margin-top:30px; color:#777;}
+</style>
+</head>
+<body>
+<div class="container" id="articleContainer">
+<!-- Article will be injected here -->
+</div>
+<div class="footer">&copy; 2025 AI Daily News</div>
+
+<script>
+const articleContainer = document.getElementById('articleContainer');
+// Check login
+if(!localStorage.getItem('loggedInUser')){
+    window.location.href='login.html';
+}
+
+// Load selected article
+const article = JSON.parse(sessionStorage.getItem('selectedArticle'));
+if(article){
+    articleContainer.innerHTML = `
+        <h1>${article.title}</h1>
+        ${article.urlToImage ? `<img src="${article.urlToImage}" alt="image">` : ''}
+        <p>${article.content || article.description}</p>
+        <h3>Brief Summary:</h3>
+        <p>${article.description || 'No summary available.'}</p>
+    `;
+}else{
+    articleContainer.innerHTML = '<p>No article selected. Go back to <a href="index.html">homepage</a>.</p>';
+}
+</script>
+</body>
+</html>
