@@ -30,5 +30,5 @@ AI Daily News is a web application that provides automated world and India news 
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/ai-daily-news.git
+git clone https://github.com/basheer786-design/ai-daily-news.git
 cd ai-daily-news
